@@ -1,0 +1,25 @@
+{
+  "name": "Audit-Custom-Route-T",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "Audit if the vnet has an Route Table associated",
+    "displayName": "Audit-Custom-Route-Table",
+    "notScopes": [
+    ],
+    "parameters": {
+      "requiredRoutes": {
+        "value": ["10.12.12.4"]
+      }
+    },
+    "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Audit-Custom-Route-Table",
+    "nonComplianceMessages": [
+    ],
+    "scope": "${current_scope_resource_id}",
+    "enforcementMode": true
+  },
+  "location": "${default_location}",
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

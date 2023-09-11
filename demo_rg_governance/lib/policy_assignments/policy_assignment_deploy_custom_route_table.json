@@ -1,0 +1,31 @@
+{
+  "name": "Deploy-Custom-Route-T",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "Deploy a route table with specific user defined routes",
+    "displayName": "Deploy-Custom-Route-Table",
+    "notScopes": [
+    ],
+    "parameters": {
+      "requiredRoutes": {
+        "value": ["10.12.12.4"]
+      },
+      "vnetRegion": {
+        "value": "westeurope"
+      },
+      "routeTableName": {
+        "value": "demo-route-table"
+      }
+    },
+    "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Deploy-Custom-Route-Table",
+    "nonComplianceMessages": [
+    ],
+    "scope": "${current_scope_resource_id}",
+    "enforcementMode": true
+  },
+  "location": "${default_location}",
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

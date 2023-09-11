@@ -1,0 +1,101 @@
+{
+  "name": "Audit-Custom-Route-Table",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "apiVersion": "2021-06-01",
+  "scope": null,
+  "properties": {
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "displayName": "Audit-Custom-Route-Table",
+    "description": "Audit if the vnet has an Route Table associated",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Network",
+      "alzCloudEnvironments": [
+        "AzureCloud",
+        "AzureChinaCloud",
+        "AzureUSGovernment"
+      ]
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "AuditIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "AuditIfNotExists"
+      },
+      "requiredRoutes": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "requiredRoutes",
+          "description": "Routes that must exist in compliant route tables deployed by this policy"
+        }
+      }
+    },
+    
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Network/virtualNetworks"
+          },
+          {
+            "count": {
+              "field": "Microsoft.Network/virtualNetworks/subnets[*]",
+              "where": {
+                "allOf": [
+                  {
+                    "field": "Microsoft.Network/virtualNetworks/subnets[*].routeTable",
+                    "exists": false
+                  },
+                  {
+                    "not": {
+                      "anyOf": [
+                        {
+                          "field": "Microsoft.Network/virtualNetworks/subnets[*].name",
+                          "equals": "AzureBastionSubnet"
+                        },
+                        {
+                          "field": "Microsoft.Network/virtualNetworks/subnets[*].name",
+                          "equals": "GatewaySubnet"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "greater": 0
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.Network/routeTables",
+          "existenceCondition": {
+            "allOf": [
+              {
+                "count": {
+                  "field": "Microsoft.Network/routeTables/routes[*]",
+                  "where": {
+                    "value": "[concat(current('Microsoft.Network/routeTables/routes[*].addressPrefix'), ';', current('Microsoft.Network/routeTables/routes[*].nextHopType'), if(equals(toLower(current('Microsoft.Network/routeTables/routes[*].nextHopType')),'virtualappliance'), concat(';', current('Microsoft.Network/routeTables/routes[*].nextHopIpAddress')), ''))]",
+                    "in": "[parameters('requiredRoutes')]"
+                  }
+                },
+                "greaterOrEquals": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
