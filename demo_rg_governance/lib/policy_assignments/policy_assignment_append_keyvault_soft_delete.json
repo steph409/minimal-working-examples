@@ -1,0 +1,22 @@
+{
+  "name": "Append-KV-SoftDelete",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "apiVersion": "2019-09-01",
+  "properties": {
+    "description": "KeyVault SoftDelete should be enabled",
+    "displayName": "Append-KV-SoftDelete",
+    "notScopes": [
+    ],
+    "parameters": {
+    },
+    "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Append-KV-SoftDelete",
+    "nonComplianceMessages": [
+    ],
+    "scope": "${current_scope_resource_id}",
+    "enforcementMode": true
+  },
+  "location": "${default_location}",
+  "identity": {
+    "type": "SystemAssigned"
+  }
+}

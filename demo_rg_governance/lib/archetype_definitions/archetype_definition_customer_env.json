@@ -14,7 +14,13 @@
       "Deny-HybridNetworking",
       "Deny-Public-Endpoints",
       "Deny-Public-IP-On-NIC",
-      "Deploy-Private-DNS-Zones"
+      "Deploy-Private-DNS-Zones",
+      "Audit-Traffic-Firewall",
+
+      "Deploy-Custom-Route-T",
+      "Audit-Custom-Route-T",
+      "Deny-Resource-Types",
+      "Append-KV-SoftDelete"
     ],
     "policy_definitions": [
       "Append-AppService-httpsonly",
@@ -140,7 +146,8 @@
       "Deploy-Storage-sslEnforcement",
       "Deploy-Vm-autoShutdown",
       "Deploy-VNET-HubSpoke",
-      "Deploy-Windows-DomainJoin"
+      "Deploy-Windows-DomainJoin",
+      "Audit-Custom-Route-Table"
     ],
     "policy_set_definitions": [
       "Audit-UnusedResourcesCostOptimization",
@@ -161,7 +168,8 @@
       "Application-Owners",
       "Network-Management",
       "Security-Operations",
-      "Subscription-Owner"
+      "Subscription-Owner",
+      "Resource-Group-Owner"
     ],
     "archetype_config": {
       "parameters": {},

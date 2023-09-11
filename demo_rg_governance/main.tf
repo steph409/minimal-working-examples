@@ -30,6 +30,7 @@ module "caf-enterprise-scale" {
   # we deploy the management group architecture using the custom_landing_zones parameter
   # thus we set the default deployment to false
   custom_landing_zones        = local.custom_landing_zones
+  template_file_variables = local.template_file_variables
   deploy_core_landing_zones   = false
   deploy_corp_landing_zones   = false
   deploy_online_landing_zones = false
