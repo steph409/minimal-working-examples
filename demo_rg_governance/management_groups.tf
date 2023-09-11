@@ -3,7 +3,7 @@ locals {
     "${local.root_id}" = {
       display_name               = local.root_name
       parent_management_group_id = local.root_parent_id
-      subscription_ids           = ["28bf6993-58c9-4927-81af-618946da865d"]
+      subscription_ids           = [var.subscription_id]
       archetype_config = {
         archetype_id = "customer_env" # default_empty for import
         parameters = {
